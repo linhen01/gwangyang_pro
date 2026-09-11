@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>전기 회로 미션</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #101820;
+            color: white;
+            text-align: center;
+        }
+
+        .container {
+            width: 700px;
+            max-width: 90%;
+            margin: 70px auto;
+            padding: 40px;
+            background: #1c2733;
+            border-radius: 20px;
+            box-shadow: 0 0 25px #000;
+        }
+
+        h1 {
+            color: #4fc3f7;
+        }
+
+        .stage {
+            color: #ffd54f;
+            font-size: 22px;
+            margin-bottom: 30px;
+        }
+
+        .question {
+            font-size: 20px;
+            line-height: 1.7;
+            margin: 30px;
+        }
+
+        input {
+            width: 250px;
+            padding: 14px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: none;
+            text-align: center;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 13px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 8px;
+            background: #2196f3;
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #42a5f5;
+        }
+
+        #result {
+            margin-top: 25px;
+            font-size: 18px;
+            min-height: 30px;
+        }
+
+        .success {
+            color: #69f0ae;
+        }
+
+        .wrong {
+            color: #ff5252;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>⚡ 전기 회로 미션 ⚡</h1>
+
+    <div class="stage">
+        STAGE <span id="stage">1</span>
+    </div>
+
+    <div class="question" id="question">
+        전압이 10V이고 저항이 5Ω일 때<br>
+        전류는 몇 A일까요?
+    </div>
+
+    <input type="text" id="answer" placeholder="답을 입력하세요">
+
+    <br>
+
+    <button onclick="checkAnswer()">정답 제출</button>
+
+    <div id="result"></div>
+
+</div>
+
+<script>
+
+let stage = 1;
+
+const questions = [
+    {
+        question: "전압이 10V이고 저항이 5Ω일 때<br>전류는 몇 A일까요?",
+        answer: "2"
+    },
+    {
+        question: "전류가 3A이고 저항이 4Ω일 때<br>전압은 몇 V일까요?",
+        answer: "12"
+    },
+    {
+        question: "전압이 20V이고 전류가 4A일 때<br>저항은 몇 Ω일까요?",
+        answer: "5"
+    }
+];
+
+function checkAnswer() {
+
+    let userAnswer = document.getElementById("answer").value.trim();
+    let result = document.getElementById("result");
+
+    if (userAnswer === questions[stage - 1].answer) {
+
+        result.innerHTML = "✅ 정답입니다! 다음 스테이지로 이동합니다.";
+        result.className = "success";
+
+        stage++;
+
+        setTimeout(function() {
+
+            if (stage <= questions.length) {
+
+                document.getElementById("stage").innerText = stage;
+
+                document.getElementById("question").innerHTML =
+                    questions[stage - 1].question;
+
+                document.getElementById("answer").value = "";
+
+                result.innerHTML = "";
+
+            } else {
+
+                document.querySelector(".container").innerHTML = `
+                    <h1>🎉 미션 클리어!</h1>
+                    <p style="font-size:22px;">
+                        모든 전기 회로 스테이지를 완료했습니다.
+                    </p>
+                    <p>⚡ 당신은 회로 문제 해결에 성공했습니다!</p>
+                `;
+
+            }
+
+        }, 1000);
+
+    } else {
+
+        result.innerHTML = "❌ 오답입니다. 다시 생각해보세요!";
+        result.className = "wrong";
+
+    }
+}
+
+</script>
+
+</body>
+</html>
